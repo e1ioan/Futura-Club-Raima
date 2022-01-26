@@ -1,0 +1,59 @@
+//--------------------------------------------------------------------------
+//  Project      : ALL PROJECTS
+//  File Name    : W11DLGAP.RH
+//  Written by   : Ioan Ghip & Gabriela Oprescu
+//  Created      : 12.12.1994
+//  Updated      : 18.06.1995
+//--------------------------------------------------------------------------
+//  Dest. System : windows
+//--------------------------------------------------------------------------
+//  Libraries    : 
+//--------------------------------------------------------------------------
+//  Data Files   :
+//--------------------------------------------------------------------------
+//  Remarks
+//--------------------------------------------------------------------------
+//  
+//--------------------------------------------------------------------------
+//
+// Dialogs
+//
+#define FUTURA_EXIT	         12340
+#define SETPASSWORD_HELP	200
+#define PASSWORD_HELP	200
+#define AP_HELP_PRESSED	3200
+#define AP_HELP	1200
+#define FUTURA_QUESTION	      12341
+#define FUTURA_INFO	         12342
+#define SET_PASSWORD	         12343
+#define PASSWORD	            12344
+#define MESSAGE_BOX	         12345
+//
+// Commands
+//
+#define MESSAGE	            12346
+#define SETPSW_PASSWORD	      12347
+#define SETPSW_R_PASSWORD	   12348
+#define SETPSW_OKBUTTON	      12349
+#define SETPSW_IDENTIFICATION	12350
+#define PSW_IDENTIFICATION	   12351
+#define PSW_PASSWORD	         12352
+#define SETPSW_GROUPBOX1	   12353
+#define PSW_ST_PASSWORD	      12354
+#define PSW_ST_IDENTIFICATION	12355
+#define SETPSW_STATIC_REPSW	12357
+#define SETPSW_STATIC_PSW	   12358
+#define SETPSW_STATIC_ID	   12359
+#define IDD_ABOUT             12360
+#define IDC_VERSION           12361
+#define IDC_COPYRIGHT         12362
+#define IDC_DEBUG	            12363
+#define IDC_FDESCRIPTION      12364
+#define VERSIONINFO_PROGRAM   1
+//
+// Bitmap
+//
+#define IDC_PASSWORD	         1235
+#define IDC_EXIT	            1234
+#define FUTURA_ABOUT	         1232
+

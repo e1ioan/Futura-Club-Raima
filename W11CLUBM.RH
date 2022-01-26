@@ -1,0 +1,249 @@
+//--------------------------------------------------------------------------
+//  Project      : w11clubm.ide
+//  File Name    : w11clubm.rh
+//  Written by   : Ioan Ghip
+//  Created      : 15.10.1994
+//  Finished     : 24.07.1995
+//--------------------------------------------------------------------------
+//  Dest. System : windows
+//--------------------------------------------------------------------------
+//  Libraries    : raima
+//--------------------------------------------------------------------------
+//  Data Files   :
+//--------------------------------------------------------------------------
+//  Remarks
+//--------------------------------------------------------------------------
+//  1993 by FUTURA Software s.r.l.
+//--------------------------------------------------------------------------
+
+// Statusbar
+#define IDC_SHEET1	101
+#define DIALOG_1	1
+#define IDC_EDIT1	101
+#define START_BMP	1777
+#define CALCULATOR	302
+#define START_HELP	302
+#define DEPOSIT_HELP	302
+#define IDC_SHEET2	102
+#define NEW_HELP	302
+#define IDC_ZOOM_BUTTON	131
+#define HELP	303
+#define IDB_HELP_PRESSED	3302
+#define IDB_HELP	1302
+#define YES_FOUND	1778
+#define NOT_FOUND	1779
+
+#define _GROUPBOX              -1
+#define NEWMEMB_GROUPBOX2	   100
+#define DEPOSIT_WITH_DLG	   103
+#define IDC_PUSHB_PASSWORD	   104
+#define IDC_RADIO_DD_MM_YY	   105
+#define IDC_RADIO_MM_DD_YY	   106
+#define IDC_RADIO_YY_MM_DD	   107
+#define IDC_RADIO_TILL	      108
+#define IDC_RADIO_DEP	      109
+#define IDC_RADIO_CLUB	      110
+#define IDC_VIEW_TIME	      111
+#define IDC_OBS_TIME	         112
+#define IDC_CURENCY_TEXT	   113
+#define IDC_COUNTRY_CODE	   114
+#define IDC_EXTRA_FEE	      115
+#define IDC_PRINT_FEE	      116
+#define IDC_READ_FEE	         117
+#define IDC_WITH_FEE	         118
+#define IDC_DEPOSIT_FEE	      119
+#define IDC_DONATION          120
+#define IDC_CLUB              121
+#define IDC_BONUS             122
+#define IDC_REG_FEE           123
+#define IDC_FUTURA_FEE        124
+#define CREATION_DATE         125
+#define LAST_MODIFY           126
+#define START_BUTTON_PASSWORD	127
+#define NEWMEMB_SEARCH	      128
+#define NEWMEMB_BUTTON_SEARCH	129
+#define NEWMEMB_POST_ADDRESS	130
+#define NEWMEMB_OFICE_TEL	   132
+#define NEWMEMB_HOME_TEL	   133
+#define NEWMEMB_ID	         134
+#define NEWMEMB_BORN_DATE	   135
+#define NEWMEMB_MID_NAME	   136
+#define NEWMEMB_LAST_NAME	   137
+#define NEWMEMB_FIRST_NAME	   138
+#define NEWMEMB_REG_BY	      140
+#define NEWMEMB_REGISTER_DATE	141
+#define NEWMEMB_UPDATE_DATE	142
+#define NEWMEMB_BUTTON_CANCEL	143
+#define NEWMEMB_LISTBOX	      144
+#define NEWMEMB_SORT_NO	      146
+#define NEWMEMB_SORT_NAME	   147
+#define NEWMEMB_RECRUT_NO	   148
+#define START_UPDATE_DATE	   149
+#define START_CREATION_DATE	150
+#define START_LANG_COMBOBOX	196
+//
+// Dialogs
+//
+#define DEP_REG         	   156
+#define BANK_REG	            157
+#define TILL_REG        	   158
+#define READ_DEP_STAT   	   159
+#define PRT_DEP_STAT    	   160
+#define PRT_BANK_STAT   	   161
+#define READ_BANK_STAT  	   162
+#define READ_TILL_STAT  	   163
+#define PRT_TILL_STAT    	   164
+#define OPEN_TILL       	   165
+#define NEW_MEMBER      	   166
+#define DEPOSIT          	   167
+#define WITHDRAWAL      	   168
+#define READ_TRANSACTION      169
+#define PRT_TRANSACTION	      170
+#define TILL_SETTLEMENT 	   171
+#define READ_CLUB_STAT	      172
+#define PRT_CLUB_STAT   	   173
+#define READ_ACCOUNT	         174
+#define PRT_ACCOUNT	         175
+#define CLUB_WITHDRAWAL 	   176
+#define READ_FUT_STAT   	   177
+#define PRT_FUT_STAT	         178
+#define START_DATA	         179
+//
+// Commands
+//
+#define CM_PRINT	            180
+#define CM_ABOUT        	   181
+#define CM_PRINTSETUP	      182
+#define PRINT_START	         183
+#define CRE_5_MEMB	         184
+#define CM_3D                 185
+#define PRINT_NEW_MEMBER      186
+#define MEMBER_UPDATE_DLG	   187
+#define MEMBER_UPDATE_MES	   188
+//
+// About Dialogs
+//
+#define IDS_MODES              193
+#define START_ST_DATE_TYPE	    195
+#define START_ST_LAST_MODIFY	 197
+#define START_ST_CREATION_DATE 198
+#define START_ST_VIEW_TIME	    199
+#define START_ST_OBSTR_TIME	 200
+#define START_ST_CURRENCY_TEXT 201
+#define START_ST_COUNTRY_CODE	 202
+#define START_ST_LANGUAGE	    203
+#define START_ST_EXTRA_FEE	    204
+#define START_ST_PRINT_FEE	    205
+#define START_ST_READ_FEE	    206
+#define START_ST_WITH_FEE	    207
+#define START_ST_DEPOSIT_FEE	 208
+#define START_ST_FUTURA_FEE	 209
+#define START_ST_REG_FEE	    210
+#define START_ST_BONUS	       211
+#define START_ST_CLUB	       212
+#define START_ST_DONATION	    213
+#define START_ST_VOUCHER_TYPE	 214
+#define NEWMEMB_ST_SEARCH	           215
+#define NEWMEMB_ST_DATE_CHANGED		  216
+#define NEWMEMB_ST_REG_DATE			  217
+#define NEWMEMB_ST_REGISTERED			  218
+#define NEWMEMB_ST_POSTAL_ADDRESS	  219
+#define NEWMEMB_ST_ADDRESS				  220
+#define NEWMEMB_ST_OFICE_TEL			  221
+#define NEWMEMB_ST_HOME_TEL			  222
+#define NEWMEMB_ST_IDENTIFICATION	  223
+#define NEWMEMB_ST_BORN_DATE			  224
+#define NEWMEMB_ST_MID_NAME			  225
+#define NEWMEMB_ST_LAST_NAME			  226
+#define NEWMEMB_ST_FIRST_NAME			  227
+#define NEWMEMB_ST_RECRUITER			  228
+#define ID_OK	                       229
+#define NEWMEMB_GROUPBOX_LIST	        230
+#define DEP_WITH_STATIC_1_1	        231
+#define DEP_WITH_STATIC_2_1	        232
+#define DEP_WITH_STATIC_3_1	        233
+#define DEP_WITH_STATIC_4_1           234
+#define DEP_WITH_STATIC_5_1	        235
+#define DEP_WITH_STATIC_6_1	        236
+#define DEP_WITH_STATIC_7_1	        237
+#define DEP_WITH_STATIC_8_1	        238
+#define DEP_WITH_STATIC_9_1	        239
+#define DEP_WITH_STATIC_SUM_1	        240
+#define DEP_WITH_STATIC_DEP_1	        241
+#define DEP_WITH_STATIC_WITH_1	     242
+#define DEP_WITH_STATIC_DEPF_1	     243
+#define DEP_WITH_STATIC_WITHF_1	     244
+#define DEP_WITH_STATIC_PRTF_1	     245
+#define DEP_WITH_STATIC_READF_1	     246
+#define DEP_WITH_STATIC_EXTRAF_1	     247
+
+#define DEP_WITH_STATIC_1_2	        248
+#define DEP_WITH_STATIC_2_2	        249
+#define DEP_WITH_STATIC_3_2	        250
+#define DEP_WITH_STATIC_4_2           251
+#define DEP_WITH_STATIC_5_2	        252
+#define DEP_WITH_STATIC_6_2	        253
+#define DEP_WITH_STATIC_7_2	        254
+#define DEP_WITH_STATIC_8_2	        255
+#define DEP_WITH_STATIC_9_2	        256
+#define DEP_WITH_STATIC_SUM_2	        257
+#define DEP_WITH_STATIC_DEP_2	        258
+#define DEP_WITH_STATIC_WITH_2	     259
+#define DEP_WITH_STATIC_DEPF_2	     260
+#define DEP_WITH_STATIC_WITHF_2	     261
+#define DEP_WITH_STATIC_PRTF_2	     262
+#define DEP_WITH_STATIC_READF_2	     263
+#define DEP_WITH_STATIC_EXTRAF_2	     264
+#define DEP_WITH_STATIC_LINK_2	     265
+#define DEP_WITH_STATIC_LINK_1	     266
+#define DEP_WITH_BUTTON_SEARCH	     267
+#define DEP_WITH_GROUPBOX1	           268
+#define DEP_WITH_RADIOB_WITH	        269
+#define DEP_WITH_RADIOB_DEP	        270
+#define DEP_WITH_STATIC_NEW_BALANCE	  271
+#define DEP_WITH_STATIC_OLD_BALANCE	  272
+#define DEP_WITH_SEARCH	              273
+#define DEP_WITH_DATE_1	              275
+#define DEP_WITH_DATE_2	              276
+#define DEP_WITH_DATE_3	              277
+#define DEP_WITH_DATE_4	              278
+#define DEP_WITH_DATE_5	              279
+
+#define DEP_WITH_NAME	              281
+#define DEP_WITH_NUMBER	              282
+#define DEP_WITH_EDIT	              283
+#define DEP_WITH_CANCEL	              284
+#define DEP_WITH_OK	                 285
+#define DATE_Y_N                      286
+#define TIME_Y_N                      287
+#define _START_                       288
+#define NEWMB_DATE_TYPE	              289
+#define COPYRIGHT_START	              301
+#define START_NAME_COMBOBOX           315
+#define NEWMEMB_ADDRESS2	           316
+#define NEWMEMB_ADDRESS1	           317
+#define DEP_WITH_POSTAL_ADDRES	     318
+#define DEP_WITH_ADDRES2	           319
+#define DEP_WITH_ADDRES1	           320
+#define NEWMEMB_ST_ADDRESS2	        321
+#define ST_DEP_WITH_INPUT	           322
+#define STATIC_NEW_BALANCE	           323
+#define STATIC_OLD_BALANCE            324
+#define STATIC_LINK	                 325
+#define STATIC_BALANCE	              326
+#define STATIC_EXTRA_FEE	           327
+#define STATIC_READ_FEE	              328
+#define STATIC_PRINT_FEE	           329
+#define STATIC_WITH_FEE	              330
+#define STATIC_DEP_FEE	              331
+#define STATIC_WITHDRAWAL	           332
+#define STATIC_DEPOSIT	              333
+#define STATIC_SUM	                 334
+#define SERARCH_READ_DIALOG	        335
+#define _READ_ACCOUNT_	              336
+
+//
+// Icons
+//
+#define FUTURA	                       300
+

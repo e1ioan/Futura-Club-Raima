@@ -1,0 +1,62 @@
+//--------------------------------------------------------------------------
+//  Project      : w11clubm.ide
+//  File Name    : w11level.rc
+//  Written by   : Ioan Ghip
+//  Created      : 16.03.1994
+//  Updated      : 28.05.1995
+//--------------------------------------------------------------------------
+//  Dest. System : windows
+//--------------------------------------------------------------------------
+//  Libraries    : raima
+//--------------------------------------------------------------------------
+//  Data Files   :
+//--------------------------------------------------------------------------
+//  Remarks
+//--------------------------------------------------------------------------
+//  
+//--------------------------------------------------------------------------
+
+#define DOWN	        	  1102
+#define OK	              1380
+#define EXCLAMATION	     1370
+#define LEVEL_HELP	     200
+#define RR_STATUS	        360
+#define RR_HELP	        1200
+#define RR_HELP_PRESSED	  3200
+#define LEFT				  1101
+#define RIGHT				  1100
+#define RR_CHANGE	        102
+#define RR_CREATE	        103
+#define LEVEL_DLG			  104
+#define RR_GROUPBOX1		  105
+#define RR_LISTBOX	     106
+#define RR_PASSWORD	     107
+#define RR_RE_PASSWORD	  108
+#define RR_LEVEL3	        109
+#define RR_LEVEL2	        110
+#define RR_LEVEL1	        111
+#define RR_IDNTIFICATION  112
+#define RR_NAME           113
+#define RRS_CH_DATE	     114
+#define RRS_CRE_DATE	     115
+#define RRS_RPASSWORD	  116
+#define RRS_PASSWORD	     117
+#define RRS_ID	           118
+#define RRS_NAME	        119
+#define RRS_TILL	        120
+#define RRS_DEPARTAMENT	  121
+#define RRS_BANK	        122
+#define CHANGE_DATE	     123
+#define CREATE_DATE	     124
+#define ID_OK             125
+#define SORT_LEVEL        126
+#define SORT_NAME         127
+#define S_NAME	           128
+#define S_LEVEL3	        129
+#define S_LEVEL2	        130
+#define S_LEVEL1	        131
+
+#define SEARCH_PRESSED	  3600
+#define SEARCH	           1600
+
+

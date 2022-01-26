@@ -1,0 +1,90 @@
+//--------------------------------------------------------------------------
+//  Project      : w11clubm.ide
+//  File Name    : w11versi.rc
+//  Written by   : Ioan Ghip
+//  Created      : 15.02.1994
+//  Updated      : 02.04.1995
+//--------------------------------------------------------------------------
+//  Dest. System : windows
+//--------------------------------------------------------------------------
+//  Libraries    : raima
+//--------------------------------------------------------------------------
+//  Data Files   :
+//--------------------------------------------------------------------------
+//  Remarks
+//--------------------------------------------------------------------------
+//  
+//--------------------------------------------------------------------------
+
+#include "w11dlgap.rh"
+#if !defined(__DEBUG_)
+// Non-Debug VERSIONINFO
+VERSIONINFO_PROGRAM VERSIONINFO
+FILEVERSION 1, 0, 0, 0
+PRODUCTVERSION 1, 0, 0, 0
+FILEFLAGSMASK 0
+FILEFLAGS VS_FFI_FILEFLAGSMASK
+FILEOS VOS__WINDOWS16
+FILETYPE VFT_APP
+{
+ BLOCK "StringFileInfo"
+ {
+  BLOCK "040904E4"
+  {
+	VALUE "CompanyName", "Futura Sofware S.R.L.\000"
+	VALUE "FileDescription", "Club program for Windows\000"
+	VALUE "FileVersion", "1.0\000"
+	VALUE "InternalName", "w11clubm\000"
+	VALUE "LegalCopyright", "Copyright © 1995 by Futura A/S.\nAll Rights Reserved.\000"
+	VALUE "LegalTrademarks", "Windows /231 is a trademark of Microsoft Corporation\000"
+	VALUE "OriginalFilename", "W11CLUBM.EXE\000"
+	VALUE "ProductName", "W11CLUBM\000"
+	VALUE "ProductVersion", "1.0\000"
+  }
+
+ }
+
+ BLOCK "VarFileInfo"
+ {
+  VALUE "Translation", 0x04e4, 0x0409
+ }
+
+}
+#else
+
+// Debug VERSIONINFO
+VERSIONINFO_PROGRAM VERSIONINFO LOADONCALL MOVEABLE
+FILEVERSION 1, 0, 0, 0
+PRODUCTVERSION 1, 0, 0, 0
+FILEFLAGSMASK VS_FF_DEBUG | VS_FF_PRERELEASE | VS_FF_PATCHED | VS_FF_PRIVATEBUILD | VS_FF_SPECIALBUILD
+FILEFLAGS VS_FFI_FILEFLAGSMASK
+FILEOS VOS__WINDOWS16
+FILETYPE VFT_APP
+BEGIN
+	 BLOCK "StringFileInfo"
+	 BEGIN
+		  // Language type = U.S. English (0x0409) and Character Set = Windows, Multilingual(0x04e4)
+		  BLOCK "040904E4"                            // Matches VarFileInfo Translation hex value.
+		  BEGIN
+				VALUE "CompanyName", "Futura Sofware S.R.L.\000"
+				VALUE "FileDescription", "Club program for Windows\000"
+				VALUE "FileVersion", "1.0\000"
+				VALUE "InternalName", "w11clubm\000"
+				VALUE "LegalCopyright", "Copyright © 1995 by Futura A/S.\nAll Rights Reserved.\000"
+				VALUE "LegalTrademarks", "Windows \231 is a trademark of Microsoft Corporation\000"
+				VALUE "OriginalFilename", "W11CLUBM.EXE\000"
+				VALUE "ProductName", "W11CLUBM\000"
+				VALUE "ProductVersion", "1.0\000"
+				VALUE "SpecialBuild", "Debug Version\000"
+				VALUE "PrivateBuild", "Built by Ioan Ghip\000"
+		  END
+	 END
+
+	 BLOCK "VarFileInfo"
+	 BEGIN
+		  VALUE "Translation", 0x04e4, 0x0409        // U.S. English(0x0409) & Windows Multilingual(0x04e4) 1252
+	 END
+
+END
+#endif
+

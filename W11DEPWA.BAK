@@ -1,0 +1,493 @@
+//--------------------------------------------------------------------------
+//  Project      : w11clubm.ide
+//  File Name    : W11DEPWA.CPP
+//  Written by   : Ioan Ghip
+//  Created      : 25.10.1994
+//  Updated      : 13.11.1995
+//--------------------------------------------------------------------------
+//  Dest. System : windows
+//--------------------------------------------------------------------------
+//  Libraries    : raima
+//--------------------------------------------------------------------------
+//  Data Files   :
+//--------------------------------------------------------------------------
+//  Remarks
+//--------------------------------------------------------------------------
+//  
+//--------------------------------------------------------------------------
+
+#include "w11hdrsm.h"
+#pragma hdrstop
+//#include "vbx\include\vtss.h"
+//#include "vbx\include\vtssonl1.h"
+#include "w11clubm.rh"
+#include "w11depwa.h"
+
+#define MSG_DEPOSIT			 11379
+#define MSG_EXTRA_FEE	    11523
+#define MSG_PRINT_FEE	    11992
+#define MSG_READ_FEE	       11994
+#define MSG_WITH_FEE	       11454
+#define MSG_DEPOSIT_FEE	    11991
+#define MSG_FUTURA_FEE	    11993
+#define MSG_REG_FEE	       11452
+#define MSG_NEW_BALANCE
+#define MSG_OLD_BALANCE
+#define MSG_LINK            11456
+#define MSG_BALANCE         10547
+#define MSG_WITHDRAWAL      11453
+#define MSG_SUM             10135
+#define MSG_OK              10451
+#define MSG_CANCEL			 11043
+#define MSG_EXIT			    11169
+#define MSG_SEARCH	       10802
+
+#define PRINT_NEW_ACCOUNT   732
+
+extern Px_File *pxClub;
+extern Px_File *pxTill;
+extern Px_File *pxMemb;
+extern DTF_FLAGS date_flags;
+extern int msg_lang;
+extern int name_type;
+extern personST AccessPerson;
+extern till_dataST OpenedTill;
+extern dninput (char *,int,int,int,char *);
+extern void SoldInTill();
+extern TMyPrinter* Printer;
+// Construction/Destruction handling.
+DepWithDlg::DepWithDlg (TWindow *parent, TResId resId, TModule *module)
+	 : TDialog(parent, resId, module)
+{
+	edit0 = new TEdit(this,DEP_WITH_SEARCH,13);
+	edit1 = new TNumericInput(this,DEP_WITH_EDIT,2+32,2,14,8,0,99999999.99);
+	ok_button = new TButton(this,DEP_WITH_OK);
+	list = new TVbxSSView(this,IDC_SHEET2);
+	Msg = new Message(msg_lang);
+	mnt=0L;
+}
+// DEFINE_RESPONSE_TABLE1 for NewMemberDlg class
+DEFINE_RESPONSE_TABLE1(DepWithDlg,TDialog)
+  EV_WM_PAINT,
+  EV_COMMAND(DEP_WITH_BUTTON_SEARCH,Search),
+  EV_COMMAND(PRINT_NEW_ACCOUNT,PrintStart),
+  EV_COMMAND(DEPOSIT_HELP,CmHelp),
+  EV_COMMAND(DEP_WITH_OK,CmOk),
+  EV_BN_CLICKED(DEP_WITH_RADIOB_WITH,CmWithdraw),
+  EV_BN_CLICKED(DEP_WITH_RADIOB_DEP,CmDeposit),
+END_RESPONSE_TABLE;
+// DepWithDlg::~DepWithDlg destructor
+DepWithDlg::~DepWithDlg ()
+{
+	 Destroy();
+	 delete Msg;
+	 delete list;
+}
+// DepWithDlg::SetupWindow function
+void DepWithDlg::SetupWindow ()
+{
+  TDialog::SetupWindow();
+  SetCaption(Msg->GetMsg(MSG_DEPOSIT,FALSE));
+  edit1->Create();
+  ok_button->Create();
+  CheckDlgButton(DEP_WITH_RADIOB_WITH,0);
+  CheckDlgButton(DEP_WITH_RADIOB_DEP,1);
+  SetDlgItemText(ST_DEP_WITH_INPUT,Msg->GetMsg(MSG_DEPOSIT,FALSE));
+  SetDlgItemText(DEP_WITH_OK,Msg->GetMsg(MSG_OK,FALSE));
+  SetDlgItemText(DEP_WITH_CANCEL,Msg->GetMsg(MSG_CANCEL,FALSE));
+  SetDlgItemText(IDCANCEL,Msg->GetMsg(MSG_EXIT,FALSE));
+  SetDlgItemText(DEP_WITH_BUTTON_SEARCH,Msg->GetMsg(MSG_SEARCH,FALSE));
+  SetDlgItemText(DEP_WITH_RADIOB_WITH,Msg->GetMsg(MSG_WITHDRAWAL,FALSE));
+  SetDlgItemText(DEP_WITH_RADIOB_DEP,Msg->GetMsg(MSG_DEPOSIT,FALSE));
+  SetDlgItemText(STATIC_NEW_BALANCE,/*Msg->GetMsg(MSG_NEW_BALANCE,FALSE)*/"New Balance");
+  SetDlgItemText(STATIC_OLD_BALANCE,/*Msg->GetMsg(MSG_OLD_BALANCE,FALSE)*/"Old Balance");
+  SetDlgItemText(STATIC_LINK,Msg->GetMsg(MSG_LINK,FALSE));
+  SetDlgItemText(STATIC_BALANCE,Msg->GetMsg(MSG_BALANCE,FALSE));
+  SetDlgItemText(STATIC_EXTRA_FEE,Msg->GetMsg(MSG_EXTRA_FEE,FALSE));
+  SetDlgItemText(STATIC_READ_FEE,Msg->GetMsg(MSG_READ_FEE,FALSE));
+  SetDlgItemText(STATIC_PRINT_FEE,Msg->GetMsg(MSG_PRINT_FEE,FALSE));
+  SetDlgItemText(STATIC_WITH_FEE,Msg->GetMsg(MSG_WITH_FEE,FALSE));
+  SetDlgItemText(STATIC_DEP_FEE,Msg->GetMsg(MSG_DEPOSIT_FEE,FALSE));
+  SetDlgItemText(STATIC_WITHDRAWAL,Msg->GetMsg(MSG_WITHDRAWAL,FALSE));
+  SetDlgItemText(STATIC_DEPOSIT,Msg->GetMsg(MSG_DEPOSIT,FALSE));
+  SetDlgItemText(STATIC_SUM,Msg->GetMsg(MSG_SUM,FALSE));
+  list->GetPropSS((long)hss);
+  list->SetPropSelection(string("A1:A9"));
+  SSSetNumberFormat(hss,"###,###,##0[BLACK];0[BLACK];0[BLACK]");
+  list->SetPropSelection(string("B1:B9"));
+  SSSetNumberFormat(hss,"###,###,##0.00[BLACK];0.00[BLACK];0.00[BLACK]");
+  list->SetPropSelection(string("A10:A10"));
+  SSSetNumberFormat(hss,"###,###,##0[BLUE];0[BLUE];0[BLUE]");
+  list->SetPropSelection(string("B10:B10"));
+  SSSetNumberFormat(hss,"###,###,##0.00[BLUE];0.00[BLUE];0.00[BLUE]");
+  list->SetPropSelection(string("A11:A17"));
+  SSSetNumberFormat(hss,"###,###,##0[BLACK];0[BLACK];0[BLACK]");
+  list->SetPropSelection(string("B11:B17"));
+  SSSetNumberFormat(hss,"###,###,##0.00[BLACK];0.00[BLACK];0.00[BLACK]");
+  list->SetPropSelection(string("A18:B18"));
+  SSSetNumberFormat(hss,"###,###,##0.00[RED];0.00[RED];0.00[RED]");
+  club_memberST om;
+  memset(&om,0,sizeof(club_memberST));
+  SetDataDlg(om);
+}
+// DepWithDlg::Search function
+void DepWithDlg::Search()
+{
+  char sir[30],sir1[20];
+  GetDlgItemText(DEP_WITH_SEARCH,sir,13);
+  wsprintf(sir1,"%s",sir+3);
+  long nr = SearchNumber = _atold(sir1);
+  club_memberST om;
+  om.m_no = nr;
+  int validate = Validate();
+  if(!pxMemb->Geteq((char*)&om) && !validate )
+  {
+	  // member exist
+	  SetDataDlg(om);
+	  noFound = om.m_no;
+	  if(om.m_no > 0 && om.m_no < 10)
+		  EnableControls(FALSE);
+	  else
+	  {
+		  EnableControls(TRUE);
+		  edit1->SetFocus();
+		  int mnt1 = 0;
+		  club_dataST clubData;
+		  pxClub->Getlw((char*)&clubData);
+		  for(int i=0;i<9;i++)
+				mnt1+=om.m_recruits[i];
+		  sprintf(sir,"%17.2lf",
+							((mnt1 * clubData.cd_donation_to_bonus + om.m_deposit)-
+							(om.m_withdrawals_amount)-
+							(om.m_deposit_no * clubData.cd_deposit_fee)-
+							(om.m_withdrawal_no * clubData.cd_withdrawal_fee)-
+							(om.m_accountr_no * clubData.cd_reading_fee)-
+							(om.m_accountp_no * clubData.cd_printout_fee)-
+							(om.m_extra_fee_no * clubData.cd_extra_fee)));
+		  oldBalance = newRange = atof(sir);
+		  SetDlgItemText(DEP_WITH_STATIC_OLD_BALANCE,sir);
+	  }
+	  SetDlgItemText(DEP_WITH_SEARCH,"");
+	  memcpy(&thisMember,&om,sizeof(club_memberST));
+  }
+  else
+  {
+	  WARNING("\nError : Member NO. is invalid.");
+	  EnableControls(FALSE);
+	  SetDlgItemText(DEP_WITH_SEARCH,"");
+	  edit0->SetFocus();
+	  SearchNumber = -1;
+  }
+}
+// DepWithDlg::Validate function
+int DepWithDlg::Validate() // return 0 for ok
+{									// return 1 for error
+	club_dataST clubData;
+	char str_data[15];
+	char country[4];
+	char sir1[15];
+	memset(str_data,0,sizeof(str_data));
+	memset(country,0,sizeof(country));
+	pxClub->Getlw((char*)&clubData);
+	GetDlgItemText(DEP_WITH_SEARCH,str_data,13);
+	memcpy(country,str_data+1,2);
+
+	wsprintf(sir1,"%s",str_data+4);
+	club_memberST om;
+	om.m_no = _atold(sir1);
+	pxMemb->Geteq((char*)&om);
+
+	if(atoi(country) == clubData.cd_country_no)
+	{
+		if(str_data[0] == '0' )
+			return 0; // ok
+		else
+			return 1; // Error
+	}
+	else
+		return 1;    // Error
+}
+// DepWithDlg::SetDataDlg function
+void DepWithDlg::SetDataDlg(club_memberST om)
+{
+#define START_1 231
+#define START_2 248
+#define START_3 275
+//	 flags = 2+32;
+	 club_dataST clubData;
+	 pxClub->Getlw((char*)&clubData);
+	 for(int i=0;i<9;i++)
+	 {
+			mnt+=om.m_recruits[i];
+			sprintf(strData[i][0],"%7ld",om.m_recruits[i]);
+			sprintf(strData[i][1],"%17.2lf",
+							om.m_recruits[i] * clubData.cd_donation_to_bonus);
+	 }
+	 sprintf(strData[i][0],"%7ld",mnt);
+	 sprintf(strData[i][1],"%17.2lf",mnt * clubData.cd_donation_to_bonus);
+	 i++;
+// how meny deposit
+	 sprintf(strData[i][0],"%7ld",om.m_deposit_no);
+// sum from deposit
+	 sprintf(strData[i][1],"%17.2lf",om.m_deposit);
+	 i++;
+// how meny withdrawal
+	 sprintf(strData[i][0],"%7ld",om.m_withdrawal_no);
+// withdrawal sum
+	 sprintf(strData[i][1],"%17.2lf",om.m_withdrawals_amount);
+	 i++;
+// how meny deposit
+	 sprintf(strData[i][0],"%7ld",om.m_deposit_no);
+// deposit fee sum
+	 sprintf(strData[i][1],"%17.2lf",
+								  (om.m_deposit_no*clubData.cd_deposit_fee));
+	 i++;
+// how meny deposit
+	 sprintf(strData[i][0],"%7ld",om.m_withdrawal_no);
+// deposit fee sum
+	 sprintf(strData[i][1],"%17.2lf",
+								  (om.m_withdrawal_no*clubData.cd_withdrawal_fee));
+	 i++;
+	 sprintf(strData[i][0],"%7ld",om.m_accountp_no);
+	 sprintf(strData[i][1],"%17.2lf",
+								  (om.m_accountp_no * clubData.cd_printout_fee));
+
+	 i++;
+	 sprintf(strData[i][0],"%7ld",om.m_accountr_no);
+	 sprintf(strData[i][1],"%17.2lf",
+	                       (om.m_accountr_no * clubData.cd_reading_fee));
+	 i++;
+// how meny extra fee
+	sprintf(strData[i][0],"%7ld",om.m_extra_fee_no);
+// extra fee sum
+	 sprintf(strData[i][1],"%17.2lf",om.m_extra_fee);
+// balance
+	 i++;
+	 sprintf(strData[i][1],"%17.2lf",(om.m_bonus_amount+om.m_deposit));
+// date format
+	 char str[20];
+	 UI_DATE date;
+	 date.Export(str,date_flags);
+	 for(i=0;i<5;i++)
+	 {
+			sprintf(dateTab[i],"0%02d%09ld ",clubData.cd_country_no,
+														  om.m_mrecs[i]);
+			if(om.m_mdate[i])
+			{
+				 date.Import(om.m_mdate[i]);
+				 date.Export(str,date_flags);
+				 strcat(dateTab[i],str);
+			}
+			else
+				 strcat(dateTab[i],"  Not Paid");
+	 }
+	 for(i=0;i<17;i++)
+		  SSSetNumberRC(hss,i+1,1,atof(strData[i][0]));
+	 for(i=0;i<17;i++)
+        SSSetNumberRC(hss,i+1,2,atof(strData[i][1]));
+	 for(i=0;i<5;i++)
+		  SetDlgItemText(START_3+i,dateTab[i]);
+	 char sir[60];
+	 CutSpace(om.m_first_name);
+	 CutSpace(om.m_last_name);
+	 switch(name_type)
+	 {
+		 case 0: wsprintf(sir,"%-s %-s",om.m_first_name,om.m_last_name);
+					break;
+		 case 1: wsprintf(sir,"%-s %-s",om.m_last_name,om.m_first_name);
+					break;
+		 case 2: wsprintf(sir,"%-s, %-s",om.m_last_name,om.m_first_name);
+					break;
+	 }
+	 CutSpace(sir);
+	 SetDlgItemText(DEP_WITH_NAME,sir);
+	 SetDlgItemText(DEP_WITH_ADDRES1,om.m_address1);
+	 SetDlgItemText(DEP_WITH_ADDRES2,om.m_address2);
+	 SetDlgItemText(DEP_WITH_POSTAL_ADDRES,om.m_postal_address);
+	 sprintf(sir,"0%02d%09ld ",clubData.cd_country_no,om.m_no);
+	 SetDlgItemText(DEP_WITH_NUMBER,sir);
+	 sprintf(sir,"%17.2lf",
+						((mnt * clubData.cd_donation_to_bonus + om.m_deposit)-
+						(om.m_withdrawals_amount)-
+						(om.m_deposit_no * clubData.cd_deposit_fee)-
+						(om.m_withdrawal_no * clubData.cd_withdrawal_fee)-
+						(om.m_accountr_no * clubData.cd_reading_fee)-
+						(om.m_accountp_no * clubData.cd_printout_fee)-
+						(om.m_extra_fee_no * clubData.cd_extra_fee)));
+	 newBalance = newRange = atof(sir);
+	 SSSetNumberRC(hss,18,2,newRange);
+	 newRange -= clubData.cd_withdrawal_fee;
+	 WithFee  = clubData.cd_withdrawal_fee;
+	 SetDlgItemText(DEP_WITH_STATIC_NEW_BALANCE,sir);
+	 mnt = 0;
+	 if(IsDlgButtonChecked(DEP_WITH_RADIOB_WITH))
+	 {
+       edit1->SetNewRange(newRange);
+		 if(newRange<=0)
+			 ok_button->EnableWindow(FALSE);
+		 else if(newRange>clubData.cd_withdrawal_fee)
+			 ok_button->EnableWindow(TRUE);
+	 }
+}
+// DepWithDlg::EnableControls function
+void DepWithDlg::EnableControls(BOOL enable)
+{
+	edit1->EnableWindow(enable);
+	ok_button->EnableWindow(enable);
+}
+// DepWithDlg::CmHelp function
+void DepWithDlg::CmHelp()
+{
+  INFO("\nHelp isn't implemented yet.");
+}
+// DepWithDlg::CmWithdraw function
+void DepWithDlg::CmWithdraw()
+{
+  if(newRange<=0)
+		ok_button->EnableWindow(FALSE);
+  else if(newRange>WithFee)
+		ok_button->EnableWindow(TRUE);
+  if(noFound > 0 && noFound < 10)
+	  EnableControls(FALSE);
+  SetDlgItemText(ST_DEP_WITH_INPUT,Msg->GetMsg(MSG_WITHDRAWAL,FALSE));
+  edit1->SetNewRange(newRange);
+}
+// DepWithDlg::CmDeposit function
+void DepWithDlg::CmDeposit()
+{
+  SetDlgItemText(ST_DEP_WITH_INPUT,Msg->GetMsg(MSG_DEPOSIT,FALSE));
+  edit1->SetNewRange(99999999.99);
+  ok_button->EnableWindow(TRUE);
+  if(noFound > 0 && noFound < 10)
+	  EnableControls(FALSE);
+}
+// DepWithDlg::CmDeposit function
+void DepWithDlg::CmOk()
+{
+  char textSumInput[30];
+  double sumInput = 0;
+  club_memberST om;
+  // write in till_data
+  till_dataST tillData;
+  tillData.td_level1 = OpenedTill.td_level1;
+  tillData.td_level2 = OpenedTill.td_level2;
+  tillData.td_level3 = OpenedTill.td_level3;
+  om.m_no = SearchNumber;
+  if(!pxMemb->Geteq((char*)&om))
+  {
+	  if(IsDlgButtonChecked(DEP_WITH_RADIOB_DEP))
+	  {
+		  // deposit
+		  // deposit fee no ++
+		  edit1->GetNumBuff(textSumInput);
+		  sumInput = atof(textSumInput);
+		  om.m_deposit_no++;
+		  om.m_deposit += sumInput;
+		  pxMemb->Updrec((char*)&om);
+		  // for till_data
+		  pxTill->Geteq((char*)&tillData);
+		  tillData.td_deposit_no++;
+		  tillData.td_paid_from_depo += sumInput;
+	  }
+	  else
+	  {
+		  // withdrawal
+		  // with fee no ++
+		  edit1->GetNumBuff(textSumInput);
+		  sumInput = atof(textSumInput);
+		  om.m_withdrawal_no++;
+		  om.m_withdrawals_amount += sumInput;
+		  pxMemb->Updrec((char*)&om);
+		  // for till_data
+		  pxTill->Geteq((char*)&tillData);
+		  tillData.td_withdrawals_no++;
+		  tillData.td_paid_out_to_with += sumInput;
+	  }
+	  // write dep/with in till data
+	  pxTill->Updrec((char*)&tillData);
+	  memcpy(&OpenedTill,&tillData,sizeof(till_dataST));
+	  SoldInTill();
+	  SetDataDlg(om);
+  }
+  SetDlgItemText(DEP_WITH_EDIT,"");
+  sumDW = sumInput;
+  PostMessage(WM_COMMAND,PRINT_NEW_ACCOUNT,0);
+}
+// DepWithDlg::SetDataPrint function
+// for set data for print label
+void DepWithDlg::SetDataPrint(DataPrint *data)
+{
+	  int flags = 2+32;
+	  int zec = 2;
+	  char sir[35];
+	  club_dataST clubData;
+	  pxClub->Getlw((char*)&clubData);
+	  wsprintf(sir,"0%2d%09ld",clubData.cd_country_no,thisMember.m_no);
+
+	  wsprintf(data->label[0],"%s","\r\nFK\"*\"");
+	  wsprintf(data->label[1],"%s","\nN");
+	  wsprintf(data->label[2],"%s","\nQ100,0");
+	  wsprintf(data->label[3],"%s","\nZT");
+	  wsprintf(data->label[4],"%s","\nR0,0");
+	  wsprintf(data->label[5],"%s","\nA68,10,0,2,2,1,N,\"DONATORS CLUB\"");
+	  wsprintf(data->label[6],"%s%d\"","\nA98,35,0,3,1,1,N,\" Deposit no.: ",thisMember.m_deposit_no);
+	  wsprintf(sir,"0%2d%09ld",clubData.cd_country_no,thisMember.m_no);
+	  wsprintf(data->label[7],"%s\"            %s\"","\nA0,68,0,2,1,1,N,",sir);
+
+	  CutSpace(thisMember.m_first_name);
+	  CutSpace(thisMember.m_last_name);
+	  char sirName[65];
+	  switch(name_type)
+	  {
+		  case 0: wsprintf(sirName,"%-s %-s",thisMember.m_first_name,thisMember.m_last_name);
+						break;
+		  case 1: wsprintf(sirName,"%-s %-s",thisMember.m_last_name,thisMember.m_first_name);
+						break;
+		  case 2: wsprintf(sirName,"%-s, %-s",thisMember.m_last_name,thisMember.m_first_name);
+						break;
+	  }
+	  CutSpace(sirName);
+	  sirName[37] = 0;
+	  wsprintf(data->label[8],"%s\"%s\"","\nA20,89,0,3,1,1,N,",sirName);
+	  wsprintf(data->label[9],"%s\"%s\"","\nA20,120,0,2,1,1,N,",thisMember.m_address1);
+	  wsprintf(data->label[10],"%s\"%s\"","\nA20,140,0,2,1,1,N,",thisMember.m_address2);
+	  wsprintf(data->label[11],"%s\"%s\"","\nA20,160,0,2,1,1,N,",thisMember.m_postal_address);
+	  sprintf(sir,"%lf",oldBalance);
+	  dninput (sir,flags,zec, 17, sir);
+	  sprintf(data->label[12],"%s%s\"","\nA20,200,0,2,1,1,N,\"Old Balance:",sir);
+	  sprintf(sir,"%lf",sumDW);
+	  dninput (sir,flags,zec, 17, sir);
+	  sprintf(data->label[13],"%s%s\"","\nA20,220,0,2,1,1,N,\"Deposit    :",sir);
+	  sprintf(sir,"%lf",newBalance);
+	  dninput (sir,flags,zec, 17, sir);
+	  sprintf(data->label[14],"%s%s\"","\nA20,240,0,2,1,1,N,\"New Balance:",sir);
+
+	  UI_DATE tod;
+	  tod.Export(sir,date_flags);
+	  // print data (today)
+	  wsprintf(data->label[15],"%s\"%s\"","\nA20,280,0,2,1,1,N,",sir);
+
+	  wsprintf(data->label[16],"%s","\nA20,300,0,2,1,1,N,\"Signature :\"");
+	  wsprintf(data->label[17],"%s","\nLE16,260,420,1");
+	  wsprintf(data->label[18],"%s","\nLE16,360,420,1");
+	  wsprintf(data->label[19],"%s","\nLE0,0,40,1");
+	  wsprintf(data->label[20],"%s","\nLE0,690,40,1");
+	  wsprintf(data->label[21],"%s","\nP1");
+	  wsprintf(data->label[22],"%s","\nFK\"*\"\r\n");
+	  data->len = 23;
+}
+
+// DepWithDlg::PrintStart function
+void DepWithDlg::PrintStart()
+{
+	if (Printer)
+	{
+	  APXPrintOut printout("Print new account");
+	  SetDataPrint(&printout.data);
+	  Printer->Print(this, printout,TRUE);
+	}
+}
+
+//------------------------------------------------------------------------
+// End File : w11depwa.cpp
+//------------------------------------------------------------------------

@@ -1,0 +1,14 @@
+
+[OPTIONS]
+TITLE=CLUB Help
+CONTENTS=CONTENTS
+
+[FILES]
+clubhlp.rtf
+
+[CONFIG]
+BrowseButtons()
+
+[MAP]
+#include <clubhlp.h>
+

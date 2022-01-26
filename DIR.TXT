@@ -1,0 +1,36 @@
+
+ Volume in drive C is 540_MB     
+ Volume Serial Number is 0677-1DD5
+ Directory of C:\WCLUB
+
+PXFILE   CPP        12,368 09-21-95   6:46p
+W03INUMB CPP        23,459 06-08-95   3:07p
+W04ITEXT CPP        19,199 05-02-95   4:38p
+W11ABOUT CPP         5,100 02-06-95  11:24a
+W11CALC  CPP         5,245 10-03-95   5:53p
+W11CLUBM CPP        30,518 11-13-95   3:43p
+W11CRINI CPP         3,795 11-13-95   3:43p
+W11DATE  CPP        14,095 10-03-95   5:41p
+W11DEPWA CPP        16,853 11-13-95   3:43p
+W11DLGAP CPP         6,322 10-12-95   9:17p
+W11GLOBA CPP         3,136 10-03-95   5:45p
+W11LEVEL CPP        24,480 10-13-95   9:07p
+W11LISTB CPP        10,067 09-30-95   7:03p
+W11LISTL CPP         4,995 09-30-95   7:03p
+W11LISTO CPP         6,480 10-13-95   9:07p
+W11MESSG CPP         2,876 09-30-95   7:01p
+W11NEWMB CPP        26,714 11-01-95   3:50p
+W11OPENT CPP         6,961 10-03-95   5:43p
+W11PASSW CPP         3,927 10-19-95  11:32a
+W11PRINT CPP         2,095 10-27-95   1:58p
+W11PTACC CPP         5,953 10-31-95   2:07p
+W11READ1 CPP         8,907 11-09-95   4:11p
+W11SETPW CPP         3,985 10-06-95   8:02p
+W11START CPP        28,394 10-13-95   9:07p
+W11STATX CPP         3,851 11-09-95   4:12p
+W11STDLG CPP         1,629 10-12-95   9:17p
+W11TIME  CPP         7,900 03-06-95   6:14p
+W11TXINP CPP         3,158 10-03-95   5:01p
+W11ZOOM  CPP        13,124 09-30-95   7:01p
+       29 file(s)        305,586 bytes
+                      73,351,168 bytes free

@@ -1,0 +1,4 @@
+_RTLDLL;_BIDSDLL;_OWLDLL;_OWLPCH;STRICT;_LEVEL_;_OWLALLPCH;WIN31;__USELOCALES__
+
+c:\bc45\include;c:\bvsp\include;c:\bde\include
+c:\bc45\lib;c:\bde\lib

@@ -1,0 +1,26 @@
+/****************************************************************************
+
+
+W11CRINI.RC
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+
+#include "w11crini.rh"
+
+DIALOG_INI DIALOG 84, 68, 194, 119
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "New INI"
+FONT 8, "MS Sans Serif"
+{
+ CONTROL "&Noua cale la bazele de date (ex: c:\\dbd\\) :", -1, "STATIC", SS_CENTER | WS_CHILD | WS_VISIBLE | WS_GROUP, 15, 45, 164, 8
+ CONTROL "", INI_EDIT, "EDIT", ES_LEFT | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 23, 59, 148, 12
+ CONTROL "&Browse", INI_BROWSE, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 122, 75, 50, 14
+ CONTROL "&Create", IDOK, "BUTTON", BS_DEFPUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 42, 99, 50, 14
+ CONTROL "&Exit", IDCANCEL, "BUTTON", BS_PUSHBUTTON | WS_CHILD | WS_VISIBLE | WS_TABSTOP, 102, 99, 50, 14
+ CONTROL "", -1, "static", SS_BLACKFRAME | WS_CHILD | WS_VISIBLE, 5, 40, 184, 53
+ CONTROL "Fisierul 'club.ini' este invalid sau inexistent. Pentru crearea unui fisier nou introduceti calea spre bazele de date ale programului.", -1, "STATIC", SS_CENTER | WS_CHILD | WS_VISIBLE | WS_GROUP, 21, 6, 151, 26
+}
+

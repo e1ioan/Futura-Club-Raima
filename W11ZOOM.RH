@@ -1,0 +1,20 @@
+/****************************************************************************
+
+
+w11zoom.rh
+
+produced by Borland Resource Workshop
+
+
+*****************************************************************************/
+
+#define ZOOM_DLG	1
+#define IDC_LIST_MEMBER	         101
+#define IDC_SRCH_NAME	         102
+#define IDC_SRCH_NUMBER	         104
+#define IDC_RADIOB_SORT_NUMBER	105
+#define IDC_RADIOB_SORT_NAME	   106
+
+#define SEARCH_PRESSED	  3600
+#define SEARCH	           1600
+
